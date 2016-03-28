@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.ustc.wlt.dao.Person">
+     <resultMap type="cn.edu.ustc.wlt.dao.dto.Person" id="person">
+        <id property="id" column="id" />
+        <result property="name" column="name" /> 
+        <result property="sex" column="sex" /> 
+        <result property="age" column="age" /> 
+        <result property="hight" column="hight" /> 
+        <result property="weight" column="weight" />
+        <result property="delFlag" column="del_flag" />       
+     </resultMap>
+     <select id="select" resultMap="person">
+       select * from person where id = #{id};
+     </select>
+     <select id="selectList" resultMap="person">
+       select * from person where 
+       <if test="${name} != null and ${name} != ''">
+             and name = #{name} 
+       </if>
+       <if test="${sex} != null and ${sex} != ''">
+             and sex = #{sex} 
+       </if>
+       <if test="${age} != null and ${age} != ''">
+             and age = #{age} 
+       </if>
+       <if test="${hight} != null and ${hight} != ''">
+             and hight = #{hight} 
+       </if>
+       <if test="${weight} != null and ${weight} != ''">
+             and weight = #{weight} 
+       </if>
+       <if test="${delFlag} != null and ${delFlag} != ''">
+             and del_flag = #{delFlag} 
+       </if> 
+     </select>
+     <insert id="insert" parameterType="cn.edu.ustc.wlt.dao.dto.Person">
+     insert into person
+            (name,sex,age,hight,weight) 
+     values 
+            (#{name},#{sex},#{age},#{hight},#{weight});
+     </insert>
+     <update id="update" parameterType="cn.edu.ustc.wlt.dao.dto.Person">  
+        update person set 
+        name=#{name},sex=#{sex},hight=#{hight},weight=#{weight},del_flag=#{delFlag}
+        where id = #{id}  
+     </update> 
+     <update id="delete" parameterType="cn.edu.ustc.wlt.dao.dto.Person">  
+        update person set 
+        del_flag=1
+        where id = #{id}  
+    </update>
+     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >  
+        delete from person  
+        where where id = #{id}    
+    </delete>     
+</mapper>

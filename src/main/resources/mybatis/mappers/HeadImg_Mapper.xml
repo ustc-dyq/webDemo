@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.keda.webDemo.umcs.dao.HeadImg">
+	<resultMap type="com.keda.webDemo.umcs.dao.dto.HeadImg" id="headImg">
+		<id property="id" column="id" />
+		<result property="userId" column="user_id" />
+		<result property="userName" column="user_name" />
+		<result property="imgUrl" column="img_url" />
+		<result property="addTime" column="add_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="delFlag" column="del_flag" />
+	</resultMap>
+	<select id="select" resultMap="headImg">
+		select user_id,user_name,img_url,add_time,update_time
+		from head_img where id = #{id};
+	</select>
+	<select id="selectAll" resultMap="headImg">
+		select id,user_id,user_name,img_url,add_time,update_time
+		from head_img;
+	</select>
+	<select id="selectByUser" resultMap="headImg">
+		select id,user_id,user_name,img_url,add_time,update_time
+		from head_img where
+		and user_id = #{userId}
+		and user_name = #{userName}
+	</select>
+	<insert id="insert" parameterType="com.keda.webDemo.umcs.dao.dto.HeadImg">
+		insert into head_img
+		(user_id,user_name,img_url,add_ime,update_time)
+		values
+		(#{userName},#{userPasswd},#{userPriv},#{addTime},#{updateTime});
+	</insert>
+	<update id="update" parameterType="com.keda.webDemo.umcs.dao.dto.HeadImg">
+		update head_img set
+		user_id=#{userId},user_name=#{userName},
+		img_url=#{imgUrl},add_time=#{addTime},update_time=#{updateTime}
+		where id = #{id}
+	</update>
+	<update id="delete" parameterType="java.lang.String">
+		update head_img set
+		del_flag=1
+		where user_id = #{userId} and user_name = #{userName}
+	</update>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from head_img
+		where id = #{id}
+	</delete>
+</mapper>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.keda.webDemo.umcs.dao.User">
+	<resultMap type="com.keda.webDemo.umcs.dao.dto.User" id="user">
+		<id property="id" column="id" />
+		<result property="userName" column="user_name" />
+		<result property="userPasswd" column="user_passwd" />
+		<result property="userPriv" column="user_priv" />
+		<result property="addTime" column="add_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="delFlag" column="del_flag" />
+	</resultMap>
+	<select id="select" resultMap="user">
+		select user_name,user_passwd,user_priv,add_time,update_time
+		from user where id = #{id};
+	</select>
+	<select id="selectAll" resultMap="user">
+		select id,user_name,user_passwd,user_priv,add_time,update_time
+		from user;
+	</select>
+	<select id="selectByUser" parameterType="com.keda.webDemo.umcs.dao.dto.User" resultMap="user">
+		select id,user_name,user_passwd,user_priv,add_time,update_time
+		from user where
+		and user_name = #{userName}
+		and user_passwd = #{userPasswd}
+	</select>
+	<insert id="insert" parameterType="com.keda.webDemo.umcs.dao.dto.User">
+		insert into user
+		(user_name,user_passwd,user_priv,add_time,update_time)
+		values
+		(#{userName},#{userPasswd},#{userPriv},#{addTime},#{updateTime});
+	</insert>
+	<update id="update" parameterType="com.keda.webDemo.umcs.dao.dto.User">
+		update user set
+		user_name=#{userName},user_passwd=#{userPasswd},
+		user_priv=#{userPriv},add_time=#{addTime},update_time=#{updateTime}
+		where id = #{id}
+	</update>
+	<update id="deleteByUserName" parameterType="java.lang.String">
+		update user set
+		del_flag=1
+		where user_name = #{userName}
+	</update>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from user
+		where id = #{id}
+	</delete>
+</mapper>

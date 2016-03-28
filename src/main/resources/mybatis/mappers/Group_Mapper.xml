@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.keda.webDemo.umcs.dao.Group">
+	<resultMap type="com.keda.webDemo.umcs.dao.dto.Group" id="group">
+		<id property="id" column="id" />
+		<result property="groupName" column="group_name" />
+		<result property="addUserName" column="add_user_name" />
+		<result property="addTime" column="add_time" />
+		<result property="delFlag" column="del_flag" />
+	</resultMap>
+	<select id="select" resultMap="group">
+		select group_name,add_user_name,add_time from group where id = #{id};
+	</select>
+	<select id="selectAll" resultMap="group">
+		select id,group_name,add_user_name,add_time from group;
+	</select>
+	<select id="selectByGroupName" resultMap="group">
+		select id,group_name,add_user_name,add_time where
+		del_flag = 0 and group_name = #{groupName}
+	</select>
+	<insert id="insert" parameterType="com.keda.webDemo.umcs.dao.dto.Group">
+		insert into group
+		(group_name,add_user_name,add_time)
+		values
+		(#{groupName},#{addUserName},#{addTime});
+	</insert>
+	<update id="update" parameterType="com.keda.webDemo.umcs.dao.dto.Group">
+		update group set
+		group_name = #{groupName},add_user_name = #{addUserName},add_time = #{addTime}
+		where id = #{id}
+	</update>
+	<update id="deleteByGroupName" parameterType="java.lang.Integer">
+		update group set
+		del_flag=1
+		where group_name = #{groupName}
+	</update>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from group
+		where id = #{id}
+	</delete>
+</mapper>
